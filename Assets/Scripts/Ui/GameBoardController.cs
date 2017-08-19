@@ -5,15 +5,24 @@ using System.Collections;
 public class GameBoardController : MonoBehaviour
 {
     [SerializeField] private Text _sequenceKepeer;
-    [SerializeField] private OperationsConfig _operationsConfig;
 
-	void Start()
+    private OperationsConfig _operationsConfig;
+    private SequenceGenerator _sequenceGenerator;
+
+	private void Awake()
 	{
-
+        _operationsConfig = ScriptableObject.CreateInstance<OperationsConfig>();
+        _sequenceGenerator = new SequenceGenerator(_operationsConfig.GetOperations());
 	}
 
-	// Update is called once per frame
-	void Update()
+    void Start()
+    {
+        Sequence sequence = _sequenceGenerator.Generate();
+        _sequenceKepeer.text = sequence.ToString();
+        Debug.Log(sequence);
+    }
+
+    void Update()
 	{
 			
 	}

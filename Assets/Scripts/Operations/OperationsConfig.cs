@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class OperationsConfig : ScriptableObject
 {
-    private List<Operation> _operations = new List<OperationsConfig>() {
-        new Additon()
+    private List<Operation> _operations = new List<Operation> {
+        new Addition()
     };
 
     public List<Operation> GetOperations() {
