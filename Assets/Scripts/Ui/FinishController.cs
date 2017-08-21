@@ -8,6 +8,7 @@ public class FinishController : MonoBehaviour
     [SerializeField] private GameObject _finishBoard;
 
     [SerializeField] private UIFade _uiFade;
+    [SerializeField] private Text _maxScoreText;
 
     private void Awake()
     {
@@ -18,6 +19,9 @@ public class FinishController : MonoBehaviour
     {
         _gameBoard.SetActive(false);
         _finishBoard.SetActive(true);
+
+		int score = PlayerPrefs.GetInt(GameEvents.ScorePrefs);
+		_maxScoreText.text = string.Format("Max score:\n{0}", score);
     }
 
     public void OnRestartClick() 

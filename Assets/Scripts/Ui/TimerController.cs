@@ -7,6 +7,10 @@ public class TimerController : MonoBehaviour
     [SerializeField] private float _baseTime;
     [SerializeField] private float _deltaTime;
 
+    [SerializeField] private Color _baseColor;
+    [SerializeField] private Color _alertColor;
+    [SerializeField] private float _lowerBound;
+
     [SerializeField] private Image _progressBar;
 	[SerializeField] private float _targetTime = 60.0f;
 
@@ -40,6 +44,10 @@ public class TimerController : MonoBehaviour
 
     void OnTimerChanged(float time) {
         float factor = time / _baseTime;
+
+        if (factor < _lowerBound) _progressBar.color = _alertColor;
+        else _progressBar.color = _baseColor;
+
         _progressBar.fillAmount = factor;
     }
 
