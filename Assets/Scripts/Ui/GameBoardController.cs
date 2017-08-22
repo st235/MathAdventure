@@ -5,6 +5,7 @@ using System.Collections;
 public class GameBoardController : MonoBehaviour
 {
     [SerializeField] private Text _sequenceKepeer;
+    [SerializeField] private AudioSource _audioSource;
 
     private Sequence _sequence;
     private OperationsConfig _operationsConfig;
@@ -29,13 +30,22 @@ public class GameBoardController : MonoBehaviour
     }
 
     public void OnApplyClick() {
-        if (CheckSequence(true)) Messenger.Broadcast(GameEvents.OnNextSequence);
-        else Messenger.Broadcast(GameEvents.OnGameEnded);
+        if (CheckSequence(true)) OnSuccess();
+        else OnMistake();
     }
 
     public void OnDeclineClick() {
-        if (CheckSequence(false)) Messenger.Broadcast(GameEvents.OnNextSequence);
-		else Messenger.Broadcast(GameEvents.OnGameEnded);
+        if (CheckSequence(false)) OnSuccess();
+        else OnMistake();
+    }
+
+    private void OnSuccess() {
+        _audioSource.Play();
+        Messenger.Broadcast(GameEvents.OnNextSequence);
+    }
+
+    private void OnMistake() {
+        Messenger.Broadcast(GameEvents.OnGameEnded);
     }
 
     private bool CheckSequence(bool isApply) {
